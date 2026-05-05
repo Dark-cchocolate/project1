@@ -1,36 +1,41 @@
+import time
+
 from student_loader import load_students
 from btree import BTree
 
 
-def main():
-    records = load_students("../data/student.csv")
+def run_btree_insertion_experiment(records, d):
+    tree = BTree(d=d)
 
-    tree = BTree(d=3)
+    start_time = time.perf_counter()
 
     for rid, record in enumerate(records):
         key = record["student_id"]
         tree.insert(key, rid)
 
-    print("B-tree insertion finished")
+    end_time = time.perf_counter()
+    insertion_time = end_time - start_time
+
+    print(f"d = {d}")
+    print(f"Insertion time: {insertion_time:.6f} seconds")
+    print(f"Split count: {tree.split_count}")
+    
+    print(f"Height: {tree.get_height()}")
+    print(f"Node count: {tree.count_nodes()}")
+    print(f"Node utilization: {tree.get_node_utilization():.6f}")
+    print()
+
+    return tree
+
+
+def main():
+    records = load_students("../data/student.csv")
+
     print("Number of records:", len(records))
-    print("Split count:", tree.split_count)
+    print("=== B-tree Insertion Experiment ===")
 
-    print("Height:", tree.get_height())
-    print("Node count:", tree.count_nodes())
-    print("Node utilization:", tree.get_node_utilization())
-
-    test_keys = [
-        records[0]["student_id"],
-        records[100]["student_id"],
-        records[-1]["student_id"],
-    ]
-
-    for key in test_keys:
-        rid = tree.search(key)
-        print("key:", key, "rid:", rid)
-
-        if rid is not None:
-            print("found record:", records[rid])
+    for d in [3, 5, 10]:
+        run_btree_insertion_experiment(records, d)
 
 
 if __name__ == "__main__":
