@@ -33,7 +33,9 @@ project1/
 │   ├── bplus_tree.py
 │   └── bstar_tree.py
 ├── results/
+│   ├── final_results.txt
 │   └── results.csv
+├── .gitignore
 └── README.md
 ```
 
@@ -84,6 +86,10 @@ results/results.csv
 ```
 
 The `results` directory is created automatically if it does not already exist.
+
+The file `results/final_results.txt` contains the reference experimental output used in the submitted report. In contrast, `results/results.csv` is generated or overwritten whenever `main.py` is executed.
+
+Because the search and deletion workloads use randomly sampled records, and because execution time depends on the runtime environment, some values in `results.csv` may change between runs.
 
 ## Implemented Index Structures
 
@@ -147,8 +153,6 @@ During insertion, the B*tree attempts the following before performing a regular 
 1. Redistribute keys with the left sibling if possible.
 2. Redistribute keys with the right sibling if possible.
 3. If redistribution is not possible, perform a 2-to-3 split.
-
-My B*tree implementation extends the B-tree insertion policy by attempting sibling redistribution before split and applying a 2-to-3 split when redistribution is not possible.
 
 The program also reports:
 
@@ -228,7 +232,10 @@ The deletion experiment also checks whether deleted keys are no longer searchabl
 
 ## Result File Format
 
+```markdown
 After execution, `results/results.csv` contains one row for each tree type and order parameter.
+
+The values in `results.csv` represent the output of the most recent execution. The report tables are based on the saved reference output in `results/final_results.txt`.
 
 The CSV columns are:
 
@@ -268,6 +275,8 @@ The program performs basic correctness checks during the experiments:
 
 ## Notes
 
-Execution times may vary depending on the hardware and runtime environment.
+The values in `results/final_results.txt` are the reference results used in the submitted report.
 
-The reported performance values should be interpreted together with structural metrics such as height, node count, split count, and node utilization.
+The file `results/results.csv` is automatically generated from the most recent run of `main.py`. Since random samples are used for search and deletion workloads, and execution time depends on the runtime environment, some values may differ slightly between runs.
+
+Execution times should be interpreted together with structural metrics such as height, node count, split count, and node utilization.
