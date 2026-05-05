@@ -1,0 +1,300 @@
+Number of records: 100000
+
+==============================
+B-tree Experiments
+==============================
+=== B-tree Insertion Experiment ===
+d = 3
+Insertion time: 0.283249 seconds
+Split count: 31365
+Height: 8
+Node count: 31374
+Node utilization: 0.637471
+
+=== B-tree Point Search Experiment ===
+Point search queries: 10000
+Found count: 10000
+Total search time: 0.037078 seconds
+Mean search time: 0.0000037078 seconds
+
+=== B-tree Range Query Experiment ===
+Range query:
+Student ID between 202000000 and 202100000, Gender = Male
+Matched male students: 7215
+Average GPA: 3.2785
+Average height: 174.0575
+Range query time: 0.042742 seconds
+
+=== B-tree Deletion Experiment ===
+Delete queries: 2000
+Deleted count: 2000
+Deleted keys not found after deletion: 2000
+Deletion time: 0.012764 seconds
+Height after deletion: 7
+Node count after deletion: 30820
+Node utilization after deletion: 0.635951
+
+=== B-tree Insertion Experiment ===
+d = 5
+Insertion time: 0.267566 seconds
+Split count: 16591
+Height: 5
+Node count: 16597
+Node utilization: 0.669465
+
+=== B-tree Point Search Experiment ===
+Point search queries: 10000
+Found count: 10000
+Total search time: 0.031978 seconds
+Mean search time: 0.0000031978 seconds
+
+=== B-tree Range Query Experiment ===
+Range query:
+Student ID between 202000000 and 202100000, Gender = Male
+Matched male students: 7215
+Average GPA: 3.2785
+Average height: 174.0575
+Range query time: 0.031876 seconds
+
+=== B-tree Deletion Experiment ===
+Delete queries: 2000
+Deleted count: 2000
+Deleted keys not found after deletion: 2000
+Deletion time: 0.009138 seconds
+Height after deletion: 5
+Node count after deletion: 16508
+Node utilization after deletion: 0.659613
+
+=== B-tree Insertion Experiment ===
+d = 10
+Insertion time: 0.286607 seconds
+Split count: 7709
+Height: 4
+Node count: 7714
+Node utilization: 0.682286
+
+=== B-tree Point Search Experiment ===
+Point search queries: 10000
+Found count: 10000
+Total search time: 0.037807 seconds
+Mean search time: 0.0000037807 seconds
+
+=== B-tree Range Query Experiment ===
+Range query:
+Student ID between 202000000 and 202100000, Gender = Male
+Matched male students: 7215
+Average GPA: 3.2785
+Average height: 174.0575
+Range query time: 0.026062 seconds
+
+=== B-tree Deletion Experiment ===
+Delete queries: 2000
+Deleted count: 2000
+Deleted keys not found after deletion: 2000
+Deletion time: 0.009744 seconds
+Height after deletion: 4
+Node count after deletion: 7701
+Node utilization after deletion: 0.669769
+
+
+==============================
+B+tree Experiments
+==============================
+=== B+tree Insertion Experiment ===
+d = 3
+Insertion time: 0.311141 seconds
+Split count: 38546
+Height: 8
+Node count: 38555
+Node utilization: 0.666907
+
+=== B+tree Point Search Experiment ===
+Point search queries: 10000
+Found count: 10000
+Total search time: 0.034423 seconds
+Mean search time: 0.0000034423 seconds
+
+=== B+tree Range Query Experiment ===
+Range query:
+Student ID between 202000000 and 202100000, Gender = Male
+Matched male students: 7215
+Average GPA: 3.2785
+Average height: 174.0575
+Range query time: 0.014157 seconds
+
+=== B+tree Deletion Experiment ===
+Delete queries: 2000
+Deleted count: 2000
+Deleted keys not found after deletion: 2000
+Deletion time: 0.037184 seconds
+Height after deletion: 8
+Node count after deletion: 38535
+Node utilization after deletion: 0.656774
+
+=== B+tree Insertion Experiment ===
+d = 5
+Insertion time: 0.302494 seconds
+Split count: 18539
+Height: 5
+Node count: 18545
+Node utilization: 0.693436
+
+=== B+tree Point Search Experiment ===
+Point search queries: 10000
+Found count: 10000
+Total search time: 0.031500 seconds
+Mean search time: 0.0000031500 seconds
+
+=== B+tree Range Query Experiment ===
+Range query:
+Student ID between 202000000 and 202100000, Gender = Male
+Matched male students: 7215
+Average GPA: 3.2785
+Average height: 174.0575
+Range query time: 0.012015 seconds
+
+=== B+tree Deletion Experiment ===
+Delete queries: 2000
+Deleted count: 2000
+Deleted keys not found after deletion: 2000
+Deletion time: 0.030412 seconds
+Height after deletion: 5
+Node count after deletion: 18542
+Node utilization after deletion: 0.681546
+
+=== B+tree Insertion Experiment ===
+d = 10
+Insertion time: 0.273477 seconds
+Split count: 8102
+Height: 4
+Node count: 8107
+Node utilization: 0.697961
+
+=== B+tree Point Search Experiment ===
+Point search queries: 10000
+Found count: 10000
+Total search time: 0.031252 seconds
+Mean search time: 0.0000031252 seconds
+
+=== B+tree Range Query Experiment ===
+Range query:
+Student ID between 202000000 and 202100000, Gender = Male
+Matched male students: 7215
+Average GPA: 3.2785
+Average height: 174.0575
+Range query time: 0.012360 seconds
+
+=== B+tree Deletion Experiment ===
+Delete queries: 2000
+Deleted count: 2000
+Deleted keys not found after deletion: 2000
+Deletion time: 0.029981 seconds
+Height after deletion: 4
+Node count after deletion: 8106
+Node utilization after deletion: 0.685055
+
+
+==============================
+B*tree Experiments
+==============================
+=== B*tree Insertion Experiment ===
+d = 3
+Insertion time: 0.402721 seconds
+Split count: 26037
+Redistribution count: 48641
+2-to-3 split count: 13501
+Height: 7
+Node count: 26045
+Node utilization: 0.767902
+Max-key violations: 0
+
+=== B*tree Point Search Experiment ===
+Point search queries: 10000
+Found count: 10000
+Total search time: 0.034794 seconds
+Mean search time: 0.0000034794 seconds
+
+=== B*tree Range Query Experiment ===
+Range query:
+Student ID between 202000000 and 202100000, Gender = Male
+Matched male students: 7215
+Average GPA: 3.2785
+Average height: 174.0575
+Range query time: 0.034036 seconds
+
+=== B*tree Deletion Experiment ===
+Delete queries: 2000
+Deleted count: 2000
+Deleted keys not found after deletion: 2000
+Deletion time: 0.010140 seconds
+Height after deletion: 7
+Node count after deletion: 25956
+Node utilization after deletion: 0.755124
+
+=== B*tree Insertion Experiment ===
+d = 5
+Insertion time: 0.338150 seconds
+Split count: 13736
+Redistribution count: 38673
+2-to-3 split count: 7862
+Height: 5
+Node count: 13742
+Node utilization: 0.808551
+Max-key violations: 0
+
+=== B*tree Point Search Experiment ===
+Point search queries: 10000
+Found count: 10000
+Total search time: 0.034163 seconds
+Mean search time: 0.0000034163 seconds
+
+=== B*tree Range Query Experiment ===
+Range query:
+Student ID between 202000000 and 202100000, Gender = Male
+Matched male students: 7215
+Average GPA: 3.2785
+Average height: 174.0575
+Range query time: 0.031338 seconds
+
+=== B*tree Deletion Experiment ===
+Delete queries: 2000
+Deleted count: 2000
+Deleted keys not found after deletion: 2000
+Deletion time: 0.008290 seconds
+Height after deletion: 5
+Node count after deletion: 13727
+Node utilization after deletion: 0.793246
+
+=== B*tree Insertion Experiment ===
+d = 10
+Insertion time: 0.370030 seconds
+Split count: 6285
+Redistribution count: 27961
+2-to-3 split count: 3795
+Height: 4
+Node count: 6290
+Node utilization: 0.836750
+Max-key violations: 0
+
+=== B*tree Point Search Experiment ===
+Point search queries: 10000
+Found count: 10000
+Total search time: 0.036463 seconds
+Mean search time: 0.0000036463 seconds
+
+=== B*tree Range Query Experiment ===
+Range query:
+Student ID between 202000000 and 202100000, Gender = Male
+Matched male students: 7215
+Average GPA: 3.2785
+Average height: 174.0575
+Range query time: 0.020384 seconds
+
+=== B*tree Deletion Experiment ===
+Delete queries: 2000
+Deleted count: 2000
+Deleted keys not found after deletion: 2000
+Deletion time: 0.009875 seconds
+Height after deletion: 4
+Node count after deletion: 6289
+Node utilization after deletion: 0.820145

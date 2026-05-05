@@ -1,6 +1,11 @@
 import time
 import random
 
+import time
+import random
+import csv
+import os
+
 from student_loader import load_students
 from btree import BTree
 from bplus_tree import BPlusTree
@@ -29,7 +34,17 @@ def run_btree_insertion_experiment(records, d):
     print(f"Node utilization: {tree.get_node_utilization():.6f}")
     print()
 
-    return tree
+    return tree, {
+        "tree": "B-tree",
+        "d": d,
+        "insertion_time": insertion_time,
+        "split_count": tree.split_count,
+        "redistribution_count": "",
+        "two_to_three_split_count": "",
+        "height": tree.get_height(),
+        "node_count": tree.count_nodes(),
+        "node_utilization": tree.get_node_utilization(),
+    }
 
 def run_btree_search_experiment(tree, records, num_queries=10000):
     query_records = random.sample(records, num_queries)
@@ -55,6 +70,12 @@ def run_btree_search_experiment(tree, records, num_queries=10000):
     print(f"Total search time: {total_time:.6f} seconds")
     print(f"Mean search time: {mean_time:.10f} seconds")
     print()
+
+    return {
+        "search_total_time": total_time,
+        "search_mean_time": mean_time,
+        "search_found_count": found_count,
+    }
 
 def run_btree_range_query_experiment(tree, records):
     start_key = 202000000
@@ -95,6 +116,13 @@ def run_btree_range_query_experiment(tree, records):
     print(f"Range query time: {total_time:.6f} seconds")
     print()
 
+    return {
+        "range_query_time": total_time,
+        "range_matched_male_count": male_count,
+        "range_avg_gpa": avg_gpa,
+        "range_avg_height": avg_height,
+    }
+
 def run_btree_delete_experiment(tree, records, num_deletes=2000):
     delete_records = random.sample(records, num_deletes)
 
@@ -131,6 +159,15 @@ def run_btree_delete_experiment(tree, records, num_deletes=2000):
     print(f"Node utilization after deletion: {tree.get_node_utilization():.6f}")
     print()
 
+    return {
+        "deletion_time": total_time,
+        "deleted_count": deleted_count,
+        "deleted_not_found_count": not_found_count,
+        "height_after_deletion": tree.get_height(),
+        "node_count_after_deletion": tree.count_nodes(),
+        "node_utilization_after_deletion": tree.get_node_utilization(),
+    }
+
 
 # For B+tree
 
@@ -154,7 +191,17 @@ def run_bplus_insertion_experiment(records, d):
     print(f"Node utilization: {tree.get_node_utilization():.6f}")
     print()
 
-    return tree
+    return tree, {
+        "tree": "B+tree",
+        "d": d,
+        "insertion_time": insertion_time,
+        "split_count": tree.split_count,
+        "redistribution_count": "",
+        "two_to_three_split_count": "",
+        "height": tree.get_height(),
+        "node_count": tree.count_nodes(),
+        "node_utilization": tree.get_node_utilization(),
+    }
 
 
 def run_bplus_search_experiment(tree, records, num_queries=10000):
@@ -181,6 +228,12 @@ def run_bplus_search_experiment(tree, records, num_queries=10000):
     print(f"Total search time: {total_time:.6f} seconds")
     print(f"Mean search time: {mean_time:.10f} seconds")
     print()
+
+    return {
+        "search_total_time": total_time,
+        "search_mean_time": mean_time,
+        "search_found_count": found_count,
+    }
 
 
 def run_bplus_range_query_experiment(tree, records):
@@ -222,6 +275,13 @@ def run_bplus_range_query_experiment(tree, records):
     print(f"Range query time: {total_time:.6f} seconds")
     print()
 
+    return {
+        "range_query_time": total_time,
+        "range_matched_male_count": male_count,
+        "range_avg_gpa": avg_gpa,
+        "range_avg_height": avg_height,
+    }
+
 def run_bplus_delete_experiment(tree, records, num_deletes=2000):
     delete_records = random.sample(records, num_deletes)
 
@@ -258,6 +318,15 @@ def run_bplus_delete_experiment(tree, records, num_deletes=2000):
     print(f"Node utilization after deletion: {tree.get_node_utilization():.6f}")
     print()
 
+    return {
+        "deletion_time": total_time,
+        "deleted_count": deleted_count,
+        "deleted_not_found_count": not_found_count,
+        "height_after_deletion": tree.get_height(),
+        "node_count_after_deletion": tree.count_nodes(),
+        "node_utilization_after_deletion": tree.get_node_utilization(),
+    }
+
 
 # For B*-tree
 
@@ -287,7 +356,17 @@ def run_bstar_insertion_experiment(records, d):
 
     print()
 
-    return tree
+    return tree, {
+        "tree": "B*tree",
+        "d": d,
+        "insertion_time": insertion_time,
+        "split_count": tree.split_count,
+        "redistribution_count": tree.redistribution_count,
+        "two_to_three_split_count": tree.two_to_three_split_count,
+        "height": tree.get_height(),
+        "node_count": tree.count_nodes(),
+        "node_utilization": tree.get_node_utilization(),
+    }
 
 
 def run_bstar_search_experiment(tree, records, num_queries=10000):
@@ -314,6 +393,12 @@ def run_bstar_search_experiment(tree, records, num_queries=10000):
     print(f"Total search time: {total_time:.6f} seconds")
     print(f"Mean search time: {mean_time:.10f} seconds")
     print()
+
+    return {
+        "search_total_time": total_time,
+        "search_mean_time": mean_time,
+        "search_found_count": found_count,
+    }
 
 
 def run_bstar_range_query_experiment(tree, records):
@@ -355,6 +440,13 @@ def run_bstar_range_query_experiment(tree, records):
     print(f"Range query time: {total_time:.6f} seconds")
     print()
 
+    return {
+        "range_query_time": total_time,
+        "range_matched_male_count": male_count,
+        "range_avg_gpa": avg_gpa,
+        "range_avg_height": avg_height,
+    }
+
 
 def run_bstar_delete_experiment(tree, records, num_deletes=2000):
     delete_records = random.sample(records, num_deletes)
@@ -392,12 +484,62 @@ def run_bstar_delete_experiment(tree, records, num_deletes=2000):
     print(f"Node utilization after deletion: {tree.get_node_utilization():.6f}")
     print()
 
+    return {
+        "deletion_time": total_time,
+        "deleted_count": deleted_count,
+        "deleted_not_found_count": not_found_count,
+        "height_after_deletion": tree.get_height(),
+        "node_count_after_deletion": tree.count_nodes(),
+        "node_utilization_after_deletion": tree.get_node_utilization(),
+    }
+
+
+# CSV storage function
+
+def save_results_to_csv(results, output_path="../results/results.csv"):
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+
+    fieldnames = [
+        "tree",
+        "d",
+        "insertion_time",
+        "split_count",
+        "redistribution_count",
+        "two_to_three_split_count",
+        "height",
+        "node_count",
+        "node_utilization",
+        "search_found_count",
+        "search_total_time",
+        "search_mean_time",
+        "range_matched_male_count",
+        "range_avg_gpa",
+        "range_avg_height",
+        "range_query_time",
+        "deleted_count",
+        "deleted_not_found_count",
+        "deletion_time",
+        "height_after_deletion",
+        "node_count_after_deletion",
+        "node_utilization_after_deletion",
+    ]
+
+    with open(output_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer.writeheader()
+
+        for row in results:
+            writer.writerow(row)
+
+    print(f"Saved results to {output_path}")
+
 
 
 # === main function ===
 
 def main():
     records = load_students("../data/student.csv")
+    experiment_results = []
 
     print("Number of records:", len(records))
 
@@ -408,16 +550,18 @@ def main():
 
     for d in [3, 5, 10]:
         print("=== B-tree Insertion Experiment ===")
-        tree = run_btree_insertion_experiment(records, d)
+        tree, row = run_btree_insertion_experiment(records, d)
 
         print("=== B-tree Point Search Experiment ===")
-        run_btree_search_experiment(tree, records, num_queries=10000)
+        row.update(run_btree_search_experiment(tree, records, num_queries=10000))
 
         print("=== B-tree Range Query Experiment ===")
-        run_btree_range_query_experiment(tree, records)
+        row.update(run_btree_range_query_experiment(tree, records))
 
         print("=== B-tree Deletion Experiment ===")
-        run_btree_delete_experiment(tree, records, num_deletes=2000)
+        row.update(run_btree_delete_experiment(tree, records, num_deletes=2000))
+
+        experiment_results.append(row)
 
     
     print("\n==============================")
@@ -426,16 +570,18 @@ def main():
 
     for d in [3, 5, 10]:
         print("=== B+tree Insertion Experiment ===")
-        tree = run_bplus_insertion_experiment(records, d)
+        tree, row = run_bplus_insertion_experiment(records, d)
 
         print("=== B+tree Point Search Experiment ===")
-        run_bplus_search_experiment(tree, records, num_queries=10000)
+        row.update(run_bplus_search_experiment(tree, records, num_queries=10000))
 
         print("=== B+tree Range Query Experiment ===")
-        run_bplus_range_query_experiment(tree, records)
+        row.update(run_bplus_range_query_experiment(tree, records))
 
         print("=== B+tree Deletion Experiment ===")
-        run_bplus_delete_experiment(tree, records, num_deletes=2000)
+        row.update(run_bplus_delete_experiment(tree, records, num_deletes=2000))
+
+        experiment_results.append(row)
 
 
     print("\n==============================")
@@ -444,16 +590,20 @@ def main():
 
     for d in [3, 5, 10]:
         print("=== B*tree Insertion Experiment ===")
-        tree = run_bstar_insertion_experiment(records, d)
+        tree, row = run_bstar_insertion_experiment(records, d)
 
         print("=== B*tree Point Search Experiment ===")
-        run_bstar_search_experiment(tree, records, num_queries=10000)
+        row.update(run_bstar_search_experiment(tree, records, num_queries=10000))
 
         print("=== B*tree Range Query Experiment ===")
-        run_bstar_range_query_experiment(tree, records)
+        row.update(run_bstar_range_query_experiment(tree, records))
 
         print("=== B*tree Deletion Experiment ===")
-        run_bstar_delete_experiment(tree, records, num_deletes=2000)
+        row.update(run_bstar_delete_experiment(tree, records, num_deletes=2000))
+
+        experiment_results.append(row)
+
+    save_results_to_csv(experiment_results)
 
 
 if __name__ == "__main__":
