@@ -97,9 +97,9 @@ def main():
     records = load_students("../data/student.csv")
 
     print("Number of records:", len(records))
-    print("=== B-tree Insertion Experiment ===")
 
     for d in [3, 5, 10]:
+        print("=== B-tree Insertion Experiment ===")
         tree = run_btree_insertion_experiment(records, d)
 
         print("=== B-tree Point Search Experiment ===")
