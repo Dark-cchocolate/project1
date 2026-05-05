@@ -166,3 +166,137 @@ class BTree:
 
         traverse(self.root)
         return result
+    
+    #Delete
+    def delete(self, key):
+        deleted = self._delete(self.root, key)
+
+        if len(self.root.keys) == 0 and not self.root.is_leaf:
+            self.root = self.root.children[0]
+
+        return deleted
+
+    def _delete(self, node, key):
+        i = 0
+
+        while i < len(node.keys) and key > node.keys[i]:
+            i += 1
+
+        if i < len(node.keys) and node.keys[i] == key:
+            if node.is_leaf:
+                node.keys.pop(i)
+                node.rids.pop(i)
+                return True
+            else:
+                return self._delete_internal_key(node, i)
+
+        else:
+            if node.is_leaf:
+                return False
+
+            child_index = i
+            child = node.children[child_index]
+
+            if len(child.keys) < self.d:
+                self._fill_child(node, child_index)
+
+                if child_index > len(node.keys):
+                    child_index -= 1
+
+            return self._delete(node.children[child_index], key)
+
+    def _delete_internal_key(self, node, index):
+        key = node.keys[index]
+
+        left_child = node.children[index]
+        right_child = node.children[index + 1]
+
+        if len(left_child.keys) >= self.d:
+            pred_key, pred_rid = self._get_predecessor(left_child)
+
+            node.keys[index] = pred_key
+            node.rids[index] = pred_rid
+
+            return self._delete(left_child, pred_key)
+
+        elif len(right_child.keys) >= self.d:
+            succ_key, succ_rid = self._get_successor(right_child)
+
+            node.keys[index] = succ_key
+            node.rids[index] = succ_rid
+
+            return self._delete(right_child, succ_key)
+
+        else:
+            self._merge_children(node, index)
+            return self._delete(left_child, key)
+
+    def _get_predecessor(self, node):
+        current = node
+
+        while not current.is_leaf:
+            current = current.children[-1]
+
+        return current.keys[-1], current.rids[-1]
+
+    def _get_successor(self, node):
+        current = node
+
+        while not current.is_leaf:
+            current = current.children[0]
+
+        return current.keys[0], current.rids[0]
+
+    def _fill_child(self, parent, index):
+        if index > 0 and len(parent.children[index - 1].keys) >= self.d:
+            self._borrow_from_prev(parent, index)
+
+        elif index < len(parent.children) - 1 and len(parent.children[index + 1].keys) >= self.d:
+            self._borrow_from_next(parent, index)
+
+        else:
+            if index < len(parent.children) - 1:
+                self._merge_children(parent, index)
+            else:
+                self._merge_children(parent, index - 1)
+
+    def _borrow_from_prev(self, parent, index):
+        child = parent.children[index]
+        sibling = parent.children[index - 1]
+
+        child.keys.insert(0, parent.keys[index - 1])
+        child.rids.insert(0, parent.rids[index - 1])
+
+        if not child.is_leaf:
+            child.children.insert(0, sibling.children.pop())
+
+        parent.keys[index - 1] = sibling.keys.pop()
+        parent.rids[index - 1] = sibling.rids.pop()
+
+    def _borrow_from_next(self, parent, index):
+        child = parent.children[index]
+        sibling = parent.children[index + 1]
+
+        child.keys.append(parent.keys[index])
+        child.rids.append(parent.rids[index])
+
+        if not child.is_leaf:
+            child.children.append(sibling.children.pop(0))
+
+        parent.keys[index] = sibling.keys.pop(0)
+        parent.rids[index] = sibling.rids.pop(0)
+
+    def _merge_children(self, parent, index):
+        child = parent.children[index]
+        sibling = parent.children[index + 1]
+
+        child.keys.append(parent.keys.pop(index))
+        child.rids.append(parent.rids.pop(index))
+
+        child.keys.extend(sibling.keys)
+        child.rids.extend(sibling.rids)
+
+        if not child.is_leaf:
+            child.children.extend(sibling.children)
+
+        parent.children.pop(index + 1)

@@ -92,6 +92,44 @@ def run_btree_range_query_experiment(tree, records):
     print(f"Range query time: {total_time:.6f} seconds")
     print()
 
+def run_btree_delete_experiment(tree, records, num_deletes=2000):
+    delete_records = random.sample(records, num_deletes)
+
+    start_time = time.perf_counter()
+
+    deleted_count = 0
+
+    for record in delete_records:
+        key = record["student_id"]
+        deleted = tree.delete(key)
+
+        if deleted:
+            deleted_count += 1
+
+    end_time = time.perf_counter()
+
+    total_time = end_time - start_time
+
+    not_found_count = 0
+
+    for record in delete_records:
+        key = record["student_id"]
+        rid = tree.search(key)
+
+        if rid is None:
+            not_found_count += 1
+
+    print(f"Delete queries: {num_deletes}")
+    print(f"Deleted count: {deleted_count}")
+    print(f"Deleted keys not found after deletion: {not_found_count}")
+    print(f"Deletion time: {total_time:.6f} seconds")
+    print(f"Height after deletion: {tree.get_height()}")
+    print(f"Node count after deletion: {tree.count_nodes()}")
+    print(f"Node utilization after deletion: {tree.get_node_utilization():.6f}")
+    print()
+
+
+# === main function ===
 
 def main():
     records = load_students("../data/student.csv")
@@ -107,6 +145,9 @@ def main():
 
         print("=== B-tree Range Query Experiment ===")
         run_btree_range_query_experiment(tree, records)
+
+        print("=== B-tree Deletion Experiment ===")
+        run_btree_delete_experiment(tree, records, num_deletes=2000)
 
 
 if __name__ == "__main__":
