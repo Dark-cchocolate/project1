@@ -232,7 +232,6 @@ The deletion experiment also checks whether deleted keys are no longer searchabl
 
 ## Result File Format
 
-```markdown
 After execution, `results/results.csv` contains one row for each tree type and order parameter.
 
 The values in `results.csv` represent the output of the most recent execution. The report tables are based on the saved reference output in `results/final_results.txt`.
