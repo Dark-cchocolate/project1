@@ -129,6 +129,20 @@ class BTree:
             return 0
 
         return total_keys / total_capacity
+    
+    def validate_max_keys(self):
+        violations = []
+
+        def traverse(node):
+            if len(node.keys) > self.max_keys:
+                violations.append(len(node.keys))
+
+            if not node.is_leaf:
+                for child in node.children:
+                    traverse(child)
+
+        traverse(self.root)
+        return violations
 
     def count_nodes(self):
         count = 0
