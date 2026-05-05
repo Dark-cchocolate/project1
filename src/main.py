@@ -1,4 +1,5 @@
 import time
+import random
 
 from student_loader import load_students
 from btree import BTree
@@ -19,13 +20,38 @@ def run_btree_insertion_experiment(records, d):
     print(f"d = {d}")
     print(f"Insertion time: {insertion_time:.6f} seconds")
     print(f"Split count: {tree.split_count}")
-    
+
     print(f"Height: {tree.get_height()}")
     print(f"Node count: {tree.count_nodes()}")
     print(f"Node utilization: {tree.get_node_utilization():.6f}")
     print()
 
     return tree
+
+def run_btree_search_experiment(tree, records, num_queries=10000):
+    query_records = random.sample(records, num_queries)
+
+    start_time = time.perf_counter()
+
+    found_count = 0
+
+    for record in query_records:
+        key = record["student_id"]
+        rid = tree.search(key)
+
+        if rid is not None:
+            found_count += 1
+
+    end_time = time.perf_counter()
+
+    total_time = end_time - start_time
+    mean_time = total_time / num_queries
+
+    print(f"Point search queries: {num_queries}")
+    print(f"Found count: {found_count}")
+    print(f"Total search time: {total_time:.6f} seconds")
+    print(f"Mean search time: {mean_time:.10f} seconds")
+    print()
 
 
 def main():
@@ -35,7 +61,10 @@ def main():
     print("=== B-tree Insertion Experiment ===")
 
     for d in [3, 5, 10]:
-        run_btree_insertion_experiment(records, d)
+        tree = run_btree_insertion_experiment(records, d)
+
+        print("=== B-tree Point Search Experiment ===")
+        run_btree_search_experiment(tree, records, num_queries=10000)
 
 
 if __name__ == "__main__":
