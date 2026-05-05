@@ -143,3 +143,26 @@ class BTree:
 
         traverse(self.root)
         return count
+    
+    def range_query(self, start_key, end_key):
+        result = []
+
+        def traverse(node):
+            i = 0
+
+            while i < len(node.keys):
+                if not node.is_leaf:
+                    traverse(node.children[i])
+
+                key = node.keys[i]
+
+                if start_key <= key <= end_key:
+                    result.append((key, node.rids[i]))
+
+                i += 1
+
+            if not node.is_leaf:
+                traverse(node.children[i])
+
+        traverse(self.root)
+        return result
